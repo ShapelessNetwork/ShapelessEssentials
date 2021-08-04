@@ -1,0 +1,21 @@
+name: ShapelessEssentials
+version: ${project.version}
+main: com.shapelessnetwork.shapelessessentials.ShapelessEssentials
+api-version: 1.17
+authors: [ LoaiDev, Poa ]
+description: Custom Essentaials plugin for Shapeless Network
+loadbefore: [ Poa ]
+commands:
+  warp:
+    aliases: [ warps ]
+  tpa:
+    permission: shapeless.tpa
+    description: tpa
+  tpahere:
+    permission: shapeless.tpahere
+    description: tpahere
+  tpaccept:
+    permission: shapeless.tpaccept
+    aliases: [ tpyes ]
+  settpaitem:
+    permission: shapeless.tpa.setitem

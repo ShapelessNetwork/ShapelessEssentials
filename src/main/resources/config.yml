@@ -1,0 +1,4 @@
+tpa:
+  enabled: flase
+  cooldown: 0
+  timeout: 15
