@@ -54,7 +54,6 @@ public class Tpa extends Service {
             this.receiver = receiver;
             this.tpaHere = tpaHere;
             this.uuid = UUID.randomUUID();
-            final Request instance = this;
             new CancelTpaTask(this).runTaskLater(ShapelessEssentials.getInstance(), Config.tpaTimeout * 20L);
         }
 
@@ -206,7 +205,7 @@ public class Tpa extends Service {
     }
 
     protected static boolean onCooldown(Player player) {
-//        if (PermissionUtils.hasPermission(player, "shapeless.tpa.cooldown.bypass")) return false;
+        if (PermissionUtils.hasPermission(player, "shapeless.tpa.cooldown.bypass")) return false;
         LocalDateTime last = lastUsages.get(player.getUniqueId());
         return last != null && Duration.between(last, LocalDateTime.now()).getSeconds() < Config.tpaCooldown;
     }

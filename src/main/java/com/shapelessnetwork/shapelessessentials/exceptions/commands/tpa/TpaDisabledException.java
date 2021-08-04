@@ -2,8 +2,8 @@ package com.shapelessnetwork.shapelessessentials.exceptions.commands.tpa;
 
 import com.shapelessnetwork.shapelessessentials.exceptions.GeneralException;
 
-public class TpaDisabled extends GeneralException {
-    public TpaDisabled() {
+public class TpaDisabledException extends GeneralException {
+    public TpaDisabledException() {
         super("Tpa is not enabled.");
     }
 }

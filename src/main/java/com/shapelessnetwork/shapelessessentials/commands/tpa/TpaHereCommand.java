@@ -4,7 +4,7 @@ import com.shapelessnetwork.shapelessessentials.Config;
 import com.shapelessnetwork.shapelessessentials.commands.PlayerCommand;
 import com.shapelessnetwork.shapelessessentials.exceptions.GeneralException;
 import com.shapelessnetwork.shapelessessentials.exceptions.commands.NotEnoughArgumentsException;
-import com.shapelessnetwork.shapelessessentials.exceptions.commands.tpa.TpaDisabled;
+import com.shapelessnetwork.shapelessessentials.exceptions.commands.tpa.TpaDisabledException;
 import com.shapelessnetwork.shapelessessentials.services.Tpa;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
@@ -16,7 +16,7 @@ public class TpaHereCommand extends PlayerCommand {
     }
     @Override
     public void run(@NotNull Player player, @NotNull Command bukkitCommand, @NotNull String label, @NotNull String[] args) throws GeneralException {
-        if (!Config.tpaEnabled) throw new TpaDisabled();
+        if (!Config.tpaEnabled) throw new TpaDisabledException();
         if (args.length < 1) {
             throw new NotEnoughArgumentsException(1, 0);
         }
