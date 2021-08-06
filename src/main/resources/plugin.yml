@@ -19,3 +19,5 @@ commands:
     aliases: [ tpyes ]
   settpaitem:
     permission: shapeless.tpa.setitem
+  shapeless:
+    permission: shapeless.shapeless

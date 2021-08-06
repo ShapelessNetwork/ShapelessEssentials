@@ -1,12 +1,14 @@
 package com.shapelessnetwork.shapelessessentials.commands;
 
 import com.shapelessnetwork.shapelessessentials.ShapelessEssentials;
+import com.shapelessnetwork.shapelessessentials.commands.shapeless.ShapelessCommand;
 import com.shapelessnetwork.shapelessessentials.commands.tpa.SetTpaItemCommand;
 import com.shapelessnetwork.shapelessessentials.commands.tpa.TpaAcceptCommand;
 import com.shapelessnetwork.shapelessessentials.commands.tpa.TpaCommand;
 import com.shapelessnetwork.shapelessessentials.commands.tpa.TpaHereCommand;
 import com.shapelessnetwork.shapelessessentials.commands.warps.WarpCommand;
 import com.shapelessnetwork.shapelessessentials.exceptions.GeneralException;
+import com.shapelessnetwork.shapelessessentials.exceptions.MissingPermissionException;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -35,6 +37,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         registerCommand(new TpaHereCommand());
         registerCommand(new TpaAcceptCommand());
         registerCommand(new SetTpaItemCommand());
+        registerCommand(new ShapelessCommand());
     }
 
     public void registerCommand(Command command) {
@@ -54,6 +57,8 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         try {
             CommandSet commandSet = getCommandWithArguments(label, args);
             Command command = commandSet.getCommand();
+            if (!command.canExecute(sender))
+                throw new MissingPermissionException();
             command.run(sender, bukkitCommand, command.getName(), commandSet.getArgs());
         } catch (GeneralException e) {
             sender.sendMessage(e.getComponent());

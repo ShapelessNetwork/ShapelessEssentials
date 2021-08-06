@@ -22,4 +22,9 @@ public class TpaHereCommand extends PlayerCommand {
         }
         Tpa.sendTpaHereRequest(player, args[0]);
     }
+
+    @Override
+    protected String permission() {
+        return "shapeless.tpahere";
+    }
 }

@@ -34,4 +34,9 @@ public class TpaAcceptCommand extends PlayerCommand {
             }
         }).collect(Collectors.toList());
     }
+
+    @Override
+    protected String permission() {
+        return "shapeless.tpaccept";
+    }
 }

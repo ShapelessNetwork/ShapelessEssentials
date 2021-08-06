@@ -96,7 +96,7 @@ public class Tpa extends Service {
             }
         }
 
-        public void sendCancelledMessages() throws GeneralException{
+        public void sendCancelledMessages() throws GeneralException {
             getSenderPlayer().sendMessage(Component.text("Teleport request to ").color(NamedTextColor.RED).append(getReceiverPlayer().displayName()).append(Component.text(" has been cancelled")));
             getReceiverPlayer().sendMessage(Component.text("Teleport request from ").color(NamedTextColor.RED).append(getSenderPlayer().displayName()).append(Component.text(" has been cancelled")));
 
@@ -114,7 +114,7 @@ public class Tpa extends Service {
     protected static class CancelTpaTask extends BukkitRunnable {
         protected final Request request;
 
-        public CancelTpaTask (Request request) {
+        public CancelTpaTask(Request request) {
             this.request = request;
         }
 
@@ -141,6 +141,8 @@ public class Tpa extends Service {
     public static void sendTpaRequest(Player sender, Player receiver, boolean tpaHere) throws GeneralException {
         if (!getRequests(receiver, sender).isEmpty())
             throw new GeneralException("You have already sent a request to that player.");
+        if (sender.getName().equals(receiver.getName()))
+            throw new GeneralException("You can't tpa to yourself.");
         tpaCheck(sender);
         Request request = new Request(sender.getUniqueId(), receiver.getUniqueId(), tpaHere);
         request.sendRequestMessages();
@@ -195,7 +197,7 @@ public class Tpa extends Service {
 
     public static void tpaCheck(Player player) throws GeneralException {
         if (onCooldown(player)) {
-            Duration duration = Duration.between(LocalDateTime.now(), lastUsages.get(player.getUniqueId()).plusSeconds(Config.tpaCooldown));
+            Duration duration = getRemainingDuration(player);
             if (Config.tpaItem != null) {
                 if (player.getInventory().containsAtLeast(Config.tpaItem, Config.tpaItem.getAmount())) return;
                 throw new TpaCooldownNoItemException(duration, Config.tpaItem);
@@ -204,7 +206,11 @@ public class Tpa extends Service {
         }
     }
 
-    protected static boolean onCooldown(Player player) {
+    public static Duration getRemainingDuration(Player player) {
+        return Duration.between(LocalDateTime.now(), lastUsages.get(player.getUniqueId()).plusSeconds(Config.tpaCooldown));
+    }
+
+    public static boolean onCooldown(Player player) {
         if (PermissionUtils.hasPermission(player, "shapeless.tpa.cooldown.bypass")) return false;
         LocalDateTime last = lastUsages.get(player.getUniqueId());
         return last != null && Duration.between(last, LocalDateTime.now()).getSeconds() < Config.tpaCooldown;

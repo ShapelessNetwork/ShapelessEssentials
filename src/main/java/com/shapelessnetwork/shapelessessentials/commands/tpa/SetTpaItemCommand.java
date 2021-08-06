@@ -19,4 +19,9 @@ public class SetTpaItemCommand extends PlayerCommand {
         if (player.getInventory().getItemInMainHand().getType() == Material.AIR) throw new MainHandItemException();
         Config.setTpaItem(player.getInventory().getItemInMainHand());
     }
+
+    @Override
+    protected String permission() {
+        return "shapeless.tpa.setitem";
+    }
 }
